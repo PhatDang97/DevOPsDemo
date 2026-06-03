@@ -45,7 +45,13 @@ Container
 DevOpsDemo.dll chạy
 
 docker build -t devopsdemo .
+docker run -d -p 8080:8080 --name devopsdemo devopsdemo
 
 
 → Docker Hub
+docker login
+docker tag devopsdemo phat997/devopsdemo:v1
+docker push phat997/devopsdemo:v1
+
+
 → CI/CD

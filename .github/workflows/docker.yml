@@ -8,6 +8,7 @@ on:
       - master
 
 jobs:
+
   # Tạo một job tên là docker
   docker:
 
@@ -28,41 +29,26 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Tên workflow hiển thị trong tab Actions của GitHub
-name: Build and Push Docker Image
-
-# Khi có code được push lên branch master thì workflow sẽ chạy
-on:
-  push:
-    branches:
-      - master
-
-jobs:
-  # Tạo một job tên là docker
-  docker:
-
-    # Chạy trên máy Ubuntu do GitHub cung cấp
-    runs-on: ubuntu-latest
-
-    steps:
-
-      # Bước 1: Lấy source code từ GitHub Repository
-      - name: Checkout source
-        uses: actions/checkout@v4
-
-      # Bước 2: Đăng nhập Docker Hub
-      # Username và Password được lấy từ GitHub Secrets
-      - name: Login Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      # Bước 3: Build Docker Image từ Dockerfile
-      # Tag image là phat997/devopsdemo:latest
+      # Bước 3: Build Docker Image
+      # github.run_number sẽ tự tăng:
+      # Build 1 -> tag :1
+      # Build 2 -> tag :2
+      # Build 3 -> tag :3
       - name: Build image
-        run: docker build -t phat997/devopsdemo:latest .
+        run: |
+          docker build -t phat997/devopsdemo:${{ github.run_number }} .
+          
+          # Tạo thêm tag latest trỏ tới version mới nhất
+          docker tag phat997/devopsdemo:${{ github.run_number }} phat997/devopsdemo:latest
 
-      # Bước 4: Push Docker Image lên Docker Hub
-      - name: Push image
+      # Bước 4: Push image version cụ thể lên Docker Hub
+      # Ví dụ:
+      # phat997/devopsdemo:1
+      # phat997/devopsdemo:2
+      - name: Push version image
+        run: docker push phat997/devopsdemo:${{ github.run_number }}
+
+      # Bước 5: Push latest lên Docker Hub
+      # latest luôn là phiên bản mới nhất
+      - name: Push latest image
         run: docker push phat997/devopsdemo:latest

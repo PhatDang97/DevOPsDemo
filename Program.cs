@@ -21,6 +21,8 @@ app.UseSwaggerUI();
 //     app.UseSwaggerUI();
 // }
 
+app.MapGet("/", () => Results.Redirect("/swagger"));
+
 app.UseHttpsRedirection();
 
 var summaries = new[]

@@ -55,3 +55,10 @@ docker push phat997/devopsdemo:v1
 
 
 → CI/CD
+Tạo Repository Secret
+Actions secrets • PhatDang97/DevOPsDemo
+Name	Value
+DOCKER_USERNAME	phat997
+DOCKER_PASSWORD	mật khẩu hoặc Docker Hub Access Token
+
+-> deploy lên cloud

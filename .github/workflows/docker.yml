@@ -52,3 +52,10 @@ jobs:
       # latest luôn là phiên bản mới nhất
       - name: Push latest image
         run: docker push phat997/devopsdemo:latest
+      
+      # Bước 6: Trigger Render Deploy
+      - name: Trigger Render Deploy
+        run: |
+          curl "$RENDER_DEPLOY_HOOK"
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}

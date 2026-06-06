@@ -62,3 +62,31 @@ DOCKER_USERNAME	phat997
 DOCKER_PASSWORD	mật khẩu hoặc Docker Hub Access Token
 
 -> deploy lên cloud
+
+Developer
+    ↓
+GitHub Repository
+    ↓
+GitHub Actions (CI)
+    ↓
+Build Docker Image
+    ↓
+Push Docker Hub
+    ↓
+Render
+    ↓
+Run Container
+    ↓
+https://devopsdemo-latest-g3b3.onrender.com
+
+Code
+↓
+Git Push
+↓
+GitHub Actions      ← CI
+↓
+Docker Hub
+↓
+Render              ← CD
+↓
+Public URL
